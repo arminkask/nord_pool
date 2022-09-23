@@ -57,9 +57,9 @@ def lylita_valja(ip):
 def get_pool_temp(ip):
        url = "http://"+ ip +"/status"
        headers = {'Content-Type': 'application/json'}
-       req = requests.get(url, headers=headers)
 
        try:
+           req = requests.get(url, headers=headers)
            data = {}
            data = json.loads(req.text)
            temp = data["ext_temperature"]["0"]["tC"]
