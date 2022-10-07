@@ -8,12 +8,12 @@ import os
 import sys
 import configparser
 
-
 #Variables
 
 ## Get config from file
 config = configparser.ConfigParser(interpolation=None)
-config_file="config.ini"
+config_file = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'config.ini')
+#config_file="config.ini"
 config.read(config_file)
 
 cloud_id = config['CREDS']['CLOUD_ID']
@@ -138,7 +138,6 @@ def get_room_temp_from_cloud(cloud_id):
 
 def main():
 
-
     try:
         turuhind = get_price()
 
@@ -225,7 +224,6 @@ def main():
             boiler_state = True
         except Exception as e:
             logging.info("turuhind_int < kyte_boiler_max_hind_int - Ei saanud boileri IP -d katte " + boiler_ip)
-            print(e)
 
 
     if turuhind_int < kyte_boiler_max_hind_int and turuhind_int > kyte_saast_hind_int:
