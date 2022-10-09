@@ -13,7 +13,8 @@ import configparser
 ## Get config from file
 config = configparser.ConfigParser(interpolation=None)
 config_file = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'config.ini')
-#config_file="config.ini"
+logfile = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'log')
+apidata = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'api.json')
 config.read(config_file)
 
 cloud_id = config['CREDS']['CLOUD_ID']
@@ -36,15 +37,13 @@ bassinikytte_hind = 100.0
 
 ##Temps
 vee_temp_max = float(20.2)
+toa_temp_max = float(20.5)
 p_temp_ok = float(18.0)
 k0_temp_ok = float(18.0)
 k1_temp_ok = float(19.5)
 k2_temp_ok = float(19.5)
 
 
-
-logfile = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'log')
-apidata = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'api.json')
 
 logging.basicConfig(
     format='%(asctime)s %(levelname)-8s %(message)s',
@@ -82,15 +81,12 @@ def get_state(ip):
            logging.info("Exception: %s" % str(e))
            return None 
 
-
-
 def lylita_sisse(ip):
        url = "http://"+ ip +"/rpc"
        headers = {'Content-Type': 'application/x-www-form-urlencoded'}
        data = '{"id":1,"method":"Switch.Set","params":{"id":0,"on":true}}'
        switch_on =  requests.post(url, headers=headers, data=data)
        return switch_on
-
 
 def lylita_valja(ip):
        url = "http://"+ ip +"/rpc"
@@ -116,7 +112,6 @@ def get_pool_temp(ip):
             logging.info("Exception: %s" % str(e))
             return 100
 
-
 def get_room_temp_from_cloud(cloud_id):
         body = {
                 'id': cloud_id,
@@ -133,8 +128,6 @@ def get_room_temp_from_cloud(cloud_id):
         except Exception as e:
             logging.info(str(e) + " cloud ID " + cloud_id)
             return 100
-
-
 
 def main():
 
@@ -158,6 +151,15 @@ def main():
     kyte_boiler_max_hind_int = int(kyte_boiler_max_hind)
     kyte_saast_hind_int = int(kyte_saast_hind)
 
+    k0_temp = get_room_temp_from_cloud(k0_temp_id)
+    k1_temp = get_room_temp_from_cloud(k1_temp_id)
+    k2_temp = get_room_temp_from_cloud(k2_temp_id)
+    p_temp = get_room_temp_from_cloud(pool_temp_id)
+    k0_temp_str = str(k0_temp)
+    k1_temp_str = str(k1_temp)
+    k2_temp_str = str(k2_temp)
+    p_temp_str = str(p_temp)
+    toa_temp_max_str = str(toa_temp_max)
 
     if turuhind_int > bassinikytte_hind_int:
           logging.info("Turuhind " + turuhind_str + " on korgem kui hea hind " + bassinikytte_hind_str +  "  - Basseinikyte valjas")
@@ -205,7 +207,7 @@ def main():
 
           try:
               lylita_valja(boiler_ip)
-              boiler_state = False
+              boiler_state = False 
           except Exception as e:
               logging.info("turuhind_int > kyte_boiler_max_hind_int - Ei saanud boileri IP -d katte " + boiler_ip)
 
@@ -229,14 +231,6 @@ def main():
     if turuhind_int < kyte_boiler_max_hind_int and turuhind_int > kyte_saast_hind_int:
         logging.info("Turuhind " + turuhind_str + " on suurem kui kytte saastu hind " + kyte_saast_hind_str + ",kuid madalam kui " + kyte_boiler_max_hind_str + "  - Vaatame temperatuure")
 
-        k0_temp = get_room_temp_from_cloud(k0_temp_id)
-        k1_temp = get_room_temp_from_cloud(k1_temp_id)
-        k2_temp = get_room_temp_from_cloud(k2_temp_id)
-        p_temp = get_room_temp_from_cloud(pool_temp_id)
-        k0_temp_str = str(k0_temp)
-        k1_temp_str = str(k1_temp)
-        k2_temp_str = str(k2_temp)
-        p_temp_str = str(p_temp)
 
         try:
             lylita_valja(kyte_x3_ip)
@@ -245,8 +239,6 @@ def main():
 
         except Exception as e:
                 logging.info("Reset X3 - Ei saanud IP -d katte " + kyte_x3_ip)
-
-
 
         if k0_temp < k0_temp_ok:
             try:
@@ -264,7 +256,7 @@ def main():
                 logging.info("1 korruse temperatuur on madal " + k1_temp_str + " - Kyte sees saastureziimis")
 
             except Exception as e:
-               logging.info("kyte_x3_state == False and kyte_x2_state == False and k1_temp < k1_temp_ok - Ei saanud kytte IP -d katte " + kyte_x2_ip)
+               logging.info("Ei saanud kytte IP -d katte " + kyte_x2_ip)
 
         elif k2_temp < k2_temp_ok:
             try:
@@ -272,7 +264,7 @@ def main():
                 kyte_x2_state = True
                 logging.info("2 korruse temperatuur on madal " + k2_temp_str + " - Kyte sees saastureziimis")
             except Exception as e:
-                logging.info("kyte_x3_state == False and kyte_x2_state == False and k2_temp < k2_temp_ok - Ei saanud kytte IP -d katte " + kyte_x2_ip)
+                logging.info("Ei saanud kytte IP -d katte " + kyte_x2_ip)
 
         elif p_temp < p_temp_ok:
             try:
@@ -300,24 +292,57 @@ def main():
             except Exception as e:
                 logging.info("Kytted korras - Ei saanud kytte IP -d katte " + kyte_x3_ip)
 
-    if turuhind_int < kyte_saast_hind_int:
-       logging.info("Turuhind " + turuhind_str + " on madalam kui kytte saastu hind " + kyte_saast_hind_str + "  - Kyte normaalreziimis")
+    if turuhind_int < kyte_saast_hind_int and k1_temp < toa_temp_max:
+       logging.info("Turuhind " + turuhind_str + " on madalam kui kytte saastu hind " + kyte_saast_hind_str + " ja K1 temperatuur on madalam kui" + toa_temp_max_str + "- Kyte normaalreziimis")
 
        try:
            lylita_valja(kyte_x2_ip)
            kyte_x2_state = False
 
        except Exception as e:
-           logging.info("turuhind_int < kyte_saast_hind_int Ei saanud kytte IP -d katte " + kyte_x2_ip)
+           logging.info("turuhind_int < " + kyte_saast_hind_int + " Ei saanud kytte IP -d katte " + kyte_x2_ip)
 
        try:
            lylita_valja(kyte_x3_ip)
            kyte_x3_state = False
 
        except Exception as e:
-           logging.info("turuhind_int < kyte_saast_hind_int - Ei saanud kytte IP -d katte " + kyte_x3_ip)
+           logging.info("turuhind_int < " + kyte_saast_hind_int + " - Ei saanud kytte IP -d katte " + kyte_x3_ip)
 
 
+
+    elif turuhind_int < kyte_saast_hind_int and k2_temp < toa_temp_max :
+       logging.info("Turuhind " + turuhind_str + " on madalam kui kytte saastu hind " + kyte_saast_hind_str + " ja K2 temperatuur on madalam kui" + toa_temp_max_str +"- Kyte normaalreziimis")
+
+       try:
+           lylita_valja(kyte_x2_ip)
+           kyte_x2_state = False
+
+       except Exception as e:
+           logging.info("turuhind_int < " +  kyte_saast_hind_int + " Ei saanud kytte IP -d katte " + kyte_x2_ip)
+
+       try:
+           lylita_valja(kyte_x3_ip)
+           kyte_x3_state = False
+
+       except Exception as e:
+           logging.info("turuhind_int < " + kyte_saast_hind_int + " - Ei saanud kytte IP -d katte " + kyte_x3_ip)
+
+    else:
+        try:
+            lylita_valja(kyte_x2_ip)
+            kyte_x2_state = False
+
+        except Exception as e:
+            logging.info("turuhind_int <" +  kyte_saast_hind_int + " , kuid toa temperatuur on korgem kui " + toa_temp_max_str + " - Ei saanud kytte IP -d katte " + kyte_x2_ip)
+
+        try:
+            lylita_sisse(kyte_x3_ip)
+            kyte_x3_state = True
+
+        except Exception as e:
+            logging.info("turuhind_int <" +  kyte_saast_hind_int +" ,kuid toa temperatuur on korgem kui " + toa_temp_max_str + " - Ei saanud kytte IP -d katte " + kyte_x3_ip)
+ 
 if __name__ == "__main__":
     main()
 
