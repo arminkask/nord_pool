@@ -313,7 +313,7 @@ def main():
 
 
        if k2_temp > toa_temp_max:
-           logging.info("K2 temperatuur on korgem kui" + toa_temp_max_str +"- Kyte valjas")
+           logging.info("K2 temperatuur on korgem kui" + toa_temp_max_str +" - Kyte valjas")
 
            try:
                lylita_sisse(kyte_x3_ip)
@@ -323,7 +323,7 @@ def main():
                logging.info("turuhind < kyte_saast_hind - Ei saanud kytte IP -d katte " + kyte_x3_ip)
 
        elif k1_temp > toa_temp_max and kyte_x3_state == False:
-           logging.info("K1 temperatuur on korgem kui " + toa_temp_max_str +"- Kyte valjas")
+           logging.info("K1 temperatuur on korgem kui " + toa_temp_max_str +" - Kyte valjas")
 
            try:
                lylita_sisse(kyte_x3_ip)
