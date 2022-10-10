@@ -167,7 +167,7 @@ def main():
               lylita_valja(bassein_ip)
               bassein_state = False
           except Exception as e:
-              logging.info("turuhind_int > bassinikytte_hind_int - Ei saanud basseini IP -d katte " + bassein_ip)
+              logging.info( + turuhind_int + "> "+ bassinikytte_hind_int +"- Ei saanud basseini IP -d katte " + bassein_ip)
 
     else:
           logging.info("Turuhind " + turuhind_str + " on madalam kui hea hind " + bassinikytte_hind_str + "  - Kontrollime vee temperatuuri")
@@ -180,7 +180,7 @@ def main():
                   logging.info("Basseini temperatuur " + basseini_temp_str + " on madalam kui " + vee_temp_max_str + " - Basseinikyte sees")
 
               except Exception as e:
-                  logging.info("basseini_temp < vee_temp_max - Ei saanud basseini IP -d katte " + bassein_ip)
+                  logging.info(+ basseini_temp + " <  " + vee_temp_max + "- Ei saanud basseini IP -d katte " + bassein_ip)
 
           elif basseini_temp == vee_temp_max:
               try:
@@ -190,7 +190,7 @@ def main():
                   logging.info("Basseini temperatuur " + basseini_temp_str + " on vordne " + vee_temp_max_str + " - Basseinikyte sees")
 
               except Exception as e:
-                  logging.info("basseini_temp == vee_temp_max - Ei saanud basseini IP -d katte " + bassein_ip)
+                  logging.info(+ basseini_temp + " = " + vee_temp_max + "- Ei saanud basseini IP -d katte " + bassein_ip)
 
           else:
               try:
@@ -209,14 +209,14 @@ def main():
               lylita_valja(boiler_ip)
               boiler_state = False 
           except Exception as e:
-              logging.info("turuhind_int > kyte_boiler_max_hind_int - Ei saanud boileri IP -d katte " + boiler_ip)
+              logging.info("turuhind > kyte_boiler_max_hind - Ei saanud boileri IP -d katte " + boiler_ip)
 
           try:
               lylita_sisse(kyte_x3_ip)
               kyte_x3_state = True
 
           except Exception as e:
-              logging.info("turuhind_int > kyte_boiler_max_hind_int - Ei saanud kytte IP -d katte " + kyte_x3_ip)
+              logging.info("turuhind > kyte_boiler_max_hind - Ei saanud kytte IP -d katte " + kyte_x3_ip)
 
     else:
         logging.info("Turuhind " + turuhind_str + " on madalam kui kytte hea hind " + kyte_boiler_max_hind_str + "  - Kyte ja boiler lyliti sees")
@@ -225,7 +225,7 @@ def main():
             lylita_sisse(boiler_ip)
             boiler_state = True
         except Exception as e:
-            logging.info("turuhind_int < kyte_boiler_max_hind_int - Ei saanud boileri IP -d katte " + boiler_ip)
+            logging.info("turuhind <  kyte_boiler_max_hind_int - Ei saanud boileri IP -d katte " + boiler_ip)
 
 
     if turuhind_int < kyte_boiler_max_hind_int and turuhind_int > kyte_saast_hind_int:
@@ -247,7 +247,7 @@ def main():
                 logging.info("0 korruse temperatuur on madal " + k0_temp_str + " - Kyte sees saastureziimis")
 
             except Exception as e:
-                logging.info("kyte_x3_state == False and k0_temp < k0_temp_ok - Ei saanud kytte IP -d katte " + kyte_x2_ip)
+                logging.info("k0_temp < k0_temp_ok - Ei saanud kytte IP -d katte " + kyte_x2_ip)
 
         elif k1_temp < k1_temp_ok:
             try:
@@ -256,7 +256,7 @@ def main():
                 logging.info("1 korruse temperatuur on madal " + k1_temp_str + " - Kyte sees saastureziimis")
 
             except Exception as e:
-               logging.info("Ei saanud kytte IP -d katte " + kyte_x2_ip)
+               logging.info("1 korruse temperatuur on madal - Ei saanud kytte IP -d katte " + kyte_x2_ip)
 
         elif k2_temp < k2_temp_ok:
             try:
@@ -264,7 +264,7 @@ def main():
                 kyte_x2_state = True
                 logging.info("2 korruse temperatuur on madal " + k2_temp_str + " - Kyte sees saastureziimis")
             except Exception as e:
-                logging.info("Ei saanud kytte IP -d katte " + kyte_x2_ip)
+                logging.info("2 korruse temperatuur on madal - Ei saanud kytte IP -d katte " + kyte_x2_ip)
 
         elif p_temp < p_temp_ok:
             try:
@@ -273,7 +273,7 @@ def main():
                 logging.info("Basseiniruumi temperatuur on madal " + p_temp_str + " - Kyte sees saastureziimis")
 
             except Exception as e:
-               logging.info("kyte_x3_state == False and kyte_x2_state == False and p_temp < p_temp_ok - Ei saanud kytte IP -d katte " + kyte_x2_ip)
+               logging.info("Basseiniruumi temperatuur on madal - Ei saanud kytte IP -d katte " + kyte_x2_ip)
 
         else:
             try:
@@ -282,7 +282,7 @@ def main():
                 logging.info("Temperatuurid ruumides on korgemad kui minimaalne temp - Kytte X2 valjas")
 
             except Exception as e:
-                logging.info("Kytted korras -  Ei saanud kytte IP -d katte " + kyte_x2_ip)
+                logging.info("Temperatuurid ruumides on korgemad kui minimaalne temp -  Ei saanud kytte IP -d katte " + kyte_x2_ip)
 
             try:
                 lylita_sisse(kyte_x3_ip)
@@ -292,57 +292,46 @@ def main():
             except Exception as e:
                 logging.info("Kytted korras - Ei saanud kytte IP -d katte " + kyte_x3_ip)
 
-    if turuhind_int < kyte_saast_hind_int and k1_temp < toa_temp_max:
-       logging.info("Turuhind " + turuhind_str + " on madalam kui kytte saastu hind " + kyte_saast_hind_str + " ja K1 temperatuur on madalam kui" + toa_temp_max_str + "- Kyte normaalreziimis")
-
-       try:
-           lylita_valja(kyte_x2_ip)
-           kyte_x2_state = False
-
-       except Exception as e:
-           logging.info("turuhind_int < " + kyte_saast_hind_int + " Ei saanud kytte IP -d katte " + kyte_x2_ip)
+    if turuhind_int < kyte_saast_hind_int:
+       logging.info("Turuhind " + turuhind_str + " on madalam kui kytte saastu hind " + kyte_saast_hind_str + " - Kontrollime temperatuure")
 
        try:
            lylita_valja(kyte_x3_ip)
            kyte_x3_state = False
+           logging.info("Reset X3 - Kytte X3 valjas")
 
        except Exception as e:
-           logging.info("turuhind_int < " + kyte_saast_hind_int + " - Ei saanud kytte IP -d katte " + kyte_x3_ip)
-
-
-
-    elif turuhind_int < kyte_saast_hind_int and k2_temp < toa_temp_max :
-       logging.info("Turuhind " + turuhind_str + " on madalam kui kytte saastu hind " + kyte_saast_hind_str + " ja K2 temperatuur on madalam kui" + toa_temp_max_str +"- Kyte normaalreziimis")
+           logging.info("Turuhind " + turuhind_str + " on madalam kui kytte saastu hind " + kyte_saast_hind_str + "Reset X3 - Ei saanud IP -d katte " + kyte_x3_ip)
 
        try:
            lylita_valja(kyte_x2_ip)
            kyte_x2_state = False
+           logging.info("Reset X2 - Kytte X2 valjas")
 
        except Exception as e:
-           logging.info("turuhind_int < " +  kyte_saast_hind_int + " Ei saanud kytte IP -d katte " + kyte_x2_ip)
+           logging.info("Turuhind " + turuhind_str + " on madalam kui kytte saastu hind " + kyte_saast_hind_str + "Reset X2 - Ei saanud IP -d katte " + kyte_x2_ip)
 
-       try:
-           lylita_valja(kyte_x3_ip)
-           kyte_x3_state = False
 
-       except Exception as e:
-           logging.info("turuhind_int < " + kyte_saast_hind_int + " - Ei saanud kytte IP -d katte " + kyte_x3_ip)
+       if k2_temp > toa_temp_max:
+           logging.info("K2 temperatuur on korgem kui" + toa_temp_max_str +"- Kyte valjas")
 
-    else:
-        try:
-            lylita_valja(kyte_x2_ip)
-            kyte_x2_state = False
+           try:
+               lylita_sisse(kyte_x3_ip)
+               kyte_x3_state = True 
 
-        except Exception as e:
-            logging.info("turuhind_int <" +  kyte_saast_hind_int + " , kuid toa temperatuur on korgem kui " + toa_temp_max_str + " - Ei saanud kytte IP -d katte " + kyte_x2_ip)
+           except Exception as e:
+               logging.info("turuhind < kyte_saast_hind - Ei saanud kytte IP -d katte " + kyte_x3_ip)
 
-        try:
-            lylita_sisse(kyte_x3_ip)
-            kyte_x3_state = True
+       elif k1_temp > toa_temp_max and kyte_x3_state == False:
+           logging.info("K1 temperatuur on korgem kui" + toa_temp_max_str +"- Kyte valjas")
 
-        except Exception as e:
-            logging.info("turuhind_int <" +  kyte_saast_hind_int +" ,kuid toa temperatuur on korgem kui " + toa_temp_max_str + " - Ei saanud kytte IP -d katte " + kyte_x3_ip)
+           try:
+               lylita_sisse(kyte_x3_ip)
+               kyte_x3_state = True
+
+           except Exception as e:
+               logging.info("turuhind < kyte_saast_hind - Ei saanud kytte IP -d katte " + kyte_x3_ip)
+
  
 if __name__ == "__main__":
     main()
-
