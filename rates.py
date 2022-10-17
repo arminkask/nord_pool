@@ -74,12 +74,12 @@ def get_state(ip):
            data = {}
            data = json.loads(req.text)
            state = data["result"]["output"]
-           return state 
+           return state
 
        except Exception as e:
            logging.info("Ei saanud " + ip + " staatust katte ")
            logging.info("Exception: %s" % str(e))
-           return None 
+           return None
 
 def lylita_sisse(ip):
        url = "http://"+ ip +"/rpc"
@@ -207,7 +207,7 @@ def main():
 
           try:
               lylita_valja(boiler_ip)
-              boiler_state = False 
+              boiler_state = False
           except Exception as e:
               logging.info("turuhind > kyte_boiler_max_hind - Ei saanud boileri IP -d katte " + boiler_ip)
 
@@ -312,16 +312,17 @@ def main():
            logging.info("Turuhind " + turuhind_str + " on madalam kui kytte saastu hind " + kyte_saast_hind_str + "Reset X2 - Ei saanud IP -d katte " + kyte_x2_ip)
 
 
-       if  k1_temp > toa_temp_max and k2_temp > toa_temp_max and kyte_x3_state == False:
-           logging.info("K1 temperatuur on " + k1_temp +",  K2 temperatuur on " + k2_temp +". See on korgem kui "+ toa_temp_max_str +" - Kyte valjas")
+       if k1_temp > toa_temp_max and k2_temp > toa_temp_max:
+          logging.info("K1 temperatuur on " + k1_temp +",  K2 temperatuur on " + k2_temp +". See on korgem kui "+ toa_temp_max_str +" - Kyte valjas")
 
-           try:
-               lylita_sisse(kyte_x3_ip)
-               kyte_x3_state = True
+          try:
+              lylita_sisse(kyte_x3_ip)
+              kyte_x3_state = True
 
-           except Exception as e:
-               logging.info("turuhind < kyte_saast_hind - Ei saanud kytte IP -d katte " + kyte_x3_ip)
+          except Exception as e:
+              logging.info("turuhind < kyte_saast_hind - Ei saanud kytte IP -d katte " + kyte_x3_ip)
 
- 
+
 if __name__ == "__main__":
     main()
+
