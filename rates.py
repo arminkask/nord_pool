@@ -9,7 +9,8 @@ import sys
 import configparser
 
 #Variables
-
+#If set to 1 then run else exit 
+run = 1
 ## Get config from file
 config = configparser.ConfigParser(interpolation=None)
 config_file = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'config.ini')
@@ -130,6 +131,10 @@ def get_room_temp_from_cloud(cloud_id):
             return 100
 
 def main():
+
+    if run != 1:
+        logging.info("Run muutuja on " + str(run) + ". Valjun" ) 
+        sys.exit(1)
 
     try:
         turuhind = get_price()
