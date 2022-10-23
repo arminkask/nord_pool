@@ -34,7 +34,7 @@ pool_temp_id = config['SERVER']['POOL_TEMP_ID']
 ##Prices
 kyte_boiler_max_hind = 600.0
 kyte_saast_hind = 200.0
-bassinikytte_hind = 100.0
+bassinikytte_hind = 90.0
 
 ##Temps
 vee_temp_max = float(20.2)
