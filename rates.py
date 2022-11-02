@@ -64,7 +64,7 @@ def get_price():
        json_file.write(data)
        rates = parsed["data"]["ee"][0]
        ee_rate = rates.get('price')
-       logging.info(+ date_time + "Hind on "  str(ee_rate) )
+       #logging.info(+ date_time + "Hind on "  str(ee_rate) )
        return ee_rate
 
 def get_state(ip):
