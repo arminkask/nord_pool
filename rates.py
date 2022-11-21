@@ -166,6 +166,8 @@ def main():
     k2_temp_str = str(k2_temp)
     p_temp_str = str(p_temp)
     toa_temp_max_str = str(toa_temp_max)
+    
+    """ Kontrollime basseini temperatuuri ja hinda"""
 
     if turuhind_int > bassinikytte_hind_int:
           logging.info("Turuhind " + turuhind_str + " on korgem kui hea hind " + bassinikytte_hind_str +  "  - Basseinikyte valjas")
@@ -207,6 +209,8 @@ def main():
               except Exception as e:
                   logging.info("basseini_temp > vee_temp_max - Ei saanud basseini IP -d katte " + bassein_ip)
 
+    
+    """ Kui turuhind on korgem kui kyte_boiler_max_hind_int, siis lülita kyte ja boiler välja """
 
     if turuhind_int > kyte_boiler_max_hind_int:
           logging.info("Turuhind " + turuhind_str + " on korgem kui kytte max hind " + kyte_boiler_max_hind_str +  "  - Kyte ja boiler lyliti valjas")
@@ -233,6 +237,7 @@ def main():
         except Exception as e:
             logging.info("turuhind <  kyte_boiler_max_hind_int - Ei saanud boileri IP -d katte " + boiler_ip)
 
+    """Kui turuhind on kalli ja madala vahel, siis lylita sisse saastureziim"""
 
     if turuhind_int < kyte_boiler_max_hind_int and turuhind_int > kyte_saast_hind_int:
         logging.info("Turuhind " + turuhind_str + " on suurem kui kytte saastu hind " + kyte_saast_hind_str + ",kuid madalam kui " + kyte_boiler_max_hind_str + "  - Vaatame temperatuure")
@@ -272,14 +277,14 @@ def main():
             except Exception as e:
                 logging.info("2 korruse temperatuur on madal - Ei saanud kytte IP -d katte " + kyte_x2_ip)
 
-        elif p_temp < p_temp_ok:
-            try:
-                lylita_sisse(kyte_x2_ip)
-                kyte_x2_state = True
-                logging.info("Basseiniruumi temperatuur on madal " + p_temp_str + " - Kyte sees saastureziimis")
-
-            except Exception as e:
-               logging.info("Basseiniruumi temperatuur on madal - Ei saanud kytte IP -d katte " + kyte_x2_ip)
+#        elif p_temp < p_temp_ok:
+#            try:
+#                lylita_sisse(kyte_x2_ip)
+#                kyte_x2_state = True
+#                logging.info("Basseiniruumi temperatuur on madal " + p_temp_str + " - Kyte sees saastureziimis")
+#
+#            except Exception as e:
+#               logging.info("Basseiniruumi temperatuur on madal - Ei saanud kytte IP -d katte " + kyte_x2_ip)
 
         else:
             try:
@@ -297,6 +302,8 @@ def main():
 
             except Exception as e:
                 logging.info("Kytted korras - Ei saanud kytte IP -d katte " + kyte_x3_ip)
+
+    """ Kui turuhind on madalam, kui kyte_saast_hind_int"""
 
     if turuhind_int < kyte_saast_hind_int:
        logging.info("Turuhind " + turuhind_str + " on madalam kui kytte saastu hind " + kyte_saast_hind_str + " - Kontrollime temperatuure")
