@@ -251,16 +251,16 @@ def main():
         except Exception as e:
                 logging.info("Reset X3 - Ei saanud IP -d katte " + kyte_x3_ip)
 
-        if k0_temp < k0_temp_ok:
-            try:
-                lylita_sisse(kyte_x2_ip)
-                kyte_x2_state = True
-                logging.info("0 korruse temperatuur on madal " + k0_temp_str + " - Kyte sees saastureziimis")
+        #if k0_temp < k0_temp_ok:
+            #try:
+                #lylita_sisse(kyte_x2_ip)
+                #kyte_x2_state = True
+                #logging.info("0 korruse temperatuur on madal " + k0_temp_str + " - Kyte sees saastureziimis")
 
-            except Exception as e:
-                logging.info("k0_temp < k0_temp_ok - Ei saanud kytte IP -d katte " + kyte_x2_ip)
+            #except Exception as e:
+                #logging.info("k0_temp < k0_temp_ok - Ei saanud kytte IP -d katte " + kyte_x2_ip)
 
-        elif k1_temp < k1_temp_ok:
+        if k1_temp < k1_temp_ok:
             try:
                 lylita_sisse(kyte_x2_ip)
                 kyte_x2_state = True
