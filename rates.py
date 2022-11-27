@@ -40,9 +40,9 @@ bassinikytte_hind = 100.0
 vee_temp_max = float(20.2)
 toa_temp_max = float(20.5)
 p_temp_ok = float(18.0)
-k0_temp_ok = float(20.0)
-k1_temp_ok = float(20.0)
-k2_temp_ok = float(19.0)
+k0_temp_ok = float(20.5)
+k1_temp_ok = float(20.5)
+k2_temp_ok = float(20.5)
 
 
 
