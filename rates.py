@@ -215,6 +215,7 @@ def main():
     """ Kui turuhind on korgem kui kyte_boiler_max_hind_int, siis lülita kyte ja boiler välja """
 
     if turuhind_int > kyte_boiler_max_hind_int:
+          kyte_x3_state = get_state(kyte_x3_ip)  
           logging.info("Turuhind " + turuhind_str + " on korgem kui kytte max hind " + kyte_boiler_max_hind_str +  "  - Kyte ja boiler lyliti valjas")
 
           try:
@@ -223,8 +224,8 @@ def main():
               logging.info("turuhind > kyte_boiler_max_hind - Ei saanud boileri IP -d katte " + boiler_ip)
 
           try:
-              lylita_sisse(kyte_x3_ip)
-
+              if not kyte_x3_state:
+                 lylita_sisse(kyte_x3_ip)
           except Exception as e:
               logging.info("turuhind > kyte_boiler_max_hind - Ei saanud kytte IP -d katte " + kyte_x3_ip)
 
@@ -235,6 +236,13 @@ def main():
             lylita_sisse(boiler_ip)
         except Exception as e:
             logging.info("turuhind <  kyte_boiler_max_hind_int - Ei saanud boileri IP -d katte " + boiler_ip)
+         
+        try:
+            if kyte_x3_state:
+               lylita_valja(kyte_x3_ip)
+            
+        except Exception as e:
+               logging.info("turuhind > kyte_boiler_max_hind - Ei saanud kytte IP -d katte " + kyte_x3_ip)
 
 
     """Kui winter_holiday on 1, siis hoiame temperatuure winter_holiday_temp väärtuse juures"""
