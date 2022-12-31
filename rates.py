@@ -287,7 +287,9 @@ def main():
             except Exception as e:
                 logging.info("Winter holiday - Ei saanud kytte IP -d katte " + kyte_x3_ip)
 
-
+        else:
+            sys.exit()
+            
     """Kui turuhind on kalli ja madala vahel, siis vaata temperatuure"""
 
     if turuhind_int < kyte_boiler_max_hind_int and turuhind_int > kyte_saast_hind_int:
