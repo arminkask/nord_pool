@@ -12,7 +12,7 @@ import configparser
 #If set to 1 then run else exit 
 run = 1
 #Set to 1 if temperature in rooms should be kept no higher winter_holiday_temp variable
-winter_holiday = 0
+winter_holiday = 1
 ## Get config from file
 config = configparser.ConfigParser(interpolation=None)
 config_file = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'config.ini')
