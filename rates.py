@@ -12,7 +12,7 @@ import configparser
 #If set to 1 then run else exit 
 run = 1
 #Set to 1 if temperature in rooms should be kept no higher winter_holiday_temp variable
-winter_holiday = 1
+winter_holiday = 0
 ## Get config from file
 config = configparser.ConfigParser(interpolation=None)
 config_file = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'config.ini')
@@ -42,9 +42,9 @@ bassinikytte_hind = 0.0
 vee_temp_max = float(20.2)
 toa_temp_max = float(21.5)
 p_temp_ok = float(18.0)
-k0_temp_ok = float(20.5)
-k1_temp_ok = float(22.8)
-k2_temp_ok = float(22.8)
+k0_temp_ok = float(10.5)
+k1_temp_ok = float(10.8)
+k2_temp_ok = float(10.8)
 winter_holiday_temp = float(11.0)
 
 logging.basicConfig(
