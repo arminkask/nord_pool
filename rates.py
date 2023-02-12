@@ -10,7 +10,7 @@ import configparser
 
 #Variables
 #If set to 1 then run else exit 
-run = 0
+run = 1
 #Set to 1 if temperature in rooms should be kept no higher winter_holiday_temp variable
 winter_holiday = 0
 ## Get config from file
@@ -43,8 +43,8 @@ vee_temp_max = float(20.2)
 toa_temp_max = float(21.5)
 p_temp_ok = float(18.0)
 k0_temp_ok = float(10.5)
-k1_temp_ok = float(20.0)
-k2_temp_ok = float(20.0)
+k1_temp_ok = float(20.2)
+k2_temp_ok = float(20.2)
 winter_holiday_temp = float(11.0)
 
 logging.basicConfig(
