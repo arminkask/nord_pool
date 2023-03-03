@@ -10,7 +10,7 @@ import configparser
 
 #Variables
 #If set to 1 then run else exit 
-run = 1 
+run = 0
 #Set to 1 if temperature in rooms should be kept no higher winter_holiday_temp variable
 winter_holiday = 0
 ## Get config from file
