@@ -43,8 +43,8 @@ vee_temp_max = float(20.2)
 toa_temp_max = float(21.5)
 p_temp_ok = float(18.0)
 k0_temp_ok = float(10.5)
-k1_temp_ok = float(20.8)
-k2_temp_ok = float(20.8)
+k1_temp_ok = float(20.6)
+k2_temp_ok = float(20.6)
 winter_holiday_temp = float(11.0)
 
 logging.basicConfig(
