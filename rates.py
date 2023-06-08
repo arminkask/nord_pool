@@ -34,7 +34,7 @@ k2_temp_id = config['SERVER']['2K_TEMP_ID']
 pool_temp_id = config['SERVER']['POOL_TEMP_ID']
 
 ##Prices
-kyte_boiler_max_hind = 600.0
+kyte_boiler_max_hind = 300.0
 kyte_saast_hind = 200.0
 bassinikytte_hind = 35.0
 
