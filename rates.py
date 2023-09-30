@@ -220,7 +220,7 @@ def main():
     else:
         try:
             lylita_valja(vent_ip,"1")
-            logging.info("Niiskus saunas on "+k2_humidity_str+" - Ventilaator valjas")
+            logging.info("Niiskus 2k on "+k2_humidity_str+" - Ventilaator valjas")
         except Exception as e:
             logging.info("Ei saanud ventilaatori IP -d katte " + vent_ip)
     
