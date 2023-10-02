@@ -293,11 +293,10 @@ def main():
             logging.info("turuhind <  kyte_boiler_max_hind_int - Ei saanud boileri IP -d katte " + boiler_ip)
          
         try:
-            if kyte_x3_state:
-               lylita_valja(kyte_x3_ip,"0")
+            lylita_valja(kyte_x3_ip,"0")
             
         except Exception as e:
-               logging.info("turuhind > kyte_boiler_max_hind - Ei saanud kytte IP -d katte " + kyte_x3_ip)
+            logging.info("turuhind > kyte_boiler_max_hind - Ei saanud kytte IP -d katte " + kyte_x3_ip)
 
 
     """Kui winter_holiday on 1, siis hoiame temperatuure winter_holiday_temp väärtuse juures"""
