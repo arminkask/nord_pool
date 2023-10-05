@@ -94,6 +94,8 @@ def lylita_sisse(ip,switch_id):
        url = "http://"+ ip +"/rpc"
        headers = {'Content-Type': 'application/x-www-form-urlencoded'}
        data = '{"id":1,"method":"Switch.Set","params":{"id":'+switch_id+',"on":true}}'
+       if switch_id == "":
+           logging.info("lylita_valja ei saanud koiki parameetreid katte")       
        switch_on =  requests.post(url, headers=headers, data=data)
        return switch_on
 
@@ -101,6 +103,8 @@ def lylita_valja(ip,switch_id):
        url = "http://"+ ip +"/rpc"
        headers = {'Content-Type': 'application/x-www-form-urlencoded'}
        data = '{"id":1,"method":"Switch.Set","params":{"id":'+switch_id+',"on":false}}'
+       if switch_id == "":
+           logging.info("lylita_valja ei saanud koiki parameetreid katte")
        switch_off =  requests.post(url, headers=headers, data=data)
        return switch_off
 
@@ -360,7 +364,8 @@ def main():
         
         if k1_temp < k1_temp_ok:
             try:
-                lylita_valja(kyte_x3_ip)
+                lylita_valja(kyte_x3_ip,"0")
+                
                 logging.info("1 korruse temperatuur on madal " + k1_temp_str + " - Kyte sees")
                 sys.exit(1)
             except Exception as e:
@@ -368,7 +373,7 @@ def main():
 
         elif k2_temp < k2_temp_ok:
             try:
-                lylita_valja(kyte_x3_ip)
+                lylita_valja(kyte_x3_ip,"0")
                 logging.info("2 korruse temperatuur on madal " + k2_temp_str + " - Kyte sees")
                 sys.exit(1)
 
@@ -377,7 +382,7 @@ def main():
 
         elif not kyte_x3_state:
             try:
-                lylita_sisse(kyte_x3_ip)
+                lylita_sisse(kyte_x3_ip,"0")
                 logging.info(f"Temperatuurid ruumides(k1 - {k1_temp_str},k2 -{k2_temp_str} on korgemad kui minimaalne temp - Kyte valjas")
 
             except Exception as e:
@@ -401,7 +406,7 @@ def main():
         if k1_temp > toa_temp_max:
             logging.info("K1 temperatuur on " + k1_temp_str +". See on korgem kui "+ toa_temp_max_str +" - Kyte valjas")
             try:
-                lylita_sisse(kyte_x3_ip)
+                lylita_sisse(kyte_x3_ip,"0")
                 sys.exit(1)
             except Exception as e:
                 logging.info("turuhind < kyte_saast_hind - Ei saanud kytte IP -d katte " + kyte_x3_ip)
@@ -410,7 +415,7 @@ def main():
             logging.info("K2 temperatuur on " + k2_temp_str +". See on korgem kui "+ toa_temp_max_str +" - Kyte valjas")
 
             try:
-                lylita_sisse(kyte_x3_ip)
+                lylita_sisse(kyte_x3_ip,"0")
                 sys.exit(1)
             except Exception as e:
                 logging.info("turuhind < kyte_saast_hind - Ei saanud kytte IP -d katte " + kyte_x3_ip)
@@ -418,7 +423,7 @@ def main():
         elif kyte_x3_state:
             logging.info("K1 temperatuur on " + k1_temp_str + ", K2 temperatuur on " + k2_temp_str +". See on madalam kui "+ toa_temp_max_str +" - Kyte sees")
             try:
-                lylita_valja(kyte_x3_ip)
+                lylita_valja(kyte_x3_ip,"0")
             except Exception as e:
                 logging.info("turuhind < kyte_saast_hind - Ei saanud kytte IP -d katte " + kyte_x3_ip)
 
