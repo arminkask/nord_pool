@@ -42,14 +42,14 @@ kyte_saast_hind = 200.0
 bassinikytte_hind = 55.0
 
 ##Temps and humidity
-vee_temp_max = float(24.5)
+vee_temp_max = float(21.5)
 toa_temp_max = float(21.5)
 p_temp_ok = float(18.0)
 k0_temp_ok = float(10.5)
 k1_temp_ok = float(20.6)
 k2_temp_ok = float(20.6)
 winter_holiday_temp = float(11.0)
-humidity_ok = float(80.0)
+humidity_ok = float(75.0)
 
 
 
@@ -297,11 +297,10 @@ def main():
             logging.info("turuhind <  kyte_boiler_max_hind_int - Ei saanud boileri IP -d katte " + boiler_ip)
          
         try:
-            if kyte_x3_state:
-               lylita_valja(kyte_x3_ip,"0")
+            lylita_valja(kyte_x3_ip,"0")
             
         except Exception as e:
-               logging.info("turuhind > kyte_boiler_max_hind - Ei saanud kytte IP -d katte " + kyte_x3_ip)
+            logging.info("turuhind > kyte_boiler_max_hind - Ei saanud kytte IP -d katte " + kyte_x3_ip)
 
 
     """Kui winter_holiday on 1, siis hoiame temperatuure winter_holiday_temp väärtuse juures"""
