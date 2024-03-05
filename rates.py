@@ -43,7 +43,7 @@ bassinikytte_hind = 70.0
 
 ##Temps and humidity
 vee_temp_max = float(21.0)
-toa_temp_max = float(21.5)
+toa_temp_max = float(22.5)
 p_temp_ok = float(18.0)
 k0_temp_ok = float(18.5)
 k1_temp_ok = float(20.5)
@@ -364,7 +364,6 @@ def main():
         if k1_temp < k1_temp_ok:
             try:
                 lylita_valja(kyte_x3_ip,"0")
-                
                 logging.info("1 korruse temperatuur on madal " + k1_temp_str + " - Kyte sees")
                 sys.exit(1)
             except Exception as e:
