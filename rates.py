@@ -2,6 +2,7 @@
 import requests
 import json
 import datetime
+from pytz import timezone
 import time
 import logging
 import os
@@ -61,18 +62,19 @@ logging.basicConfig(
     datefmt='%Y-%m-%d %H:%M:%S')
 
 def get_price():
-       curDT = datetime.datetime.utcnow()
-       date_time = curDT.strftime("%Y-%m-%dT%H")
-       url = "https://dashboard.elering.ee/api/nps/price?start=" + date_time + "%3A00%3A00.999Z&end=" + date_time + "%3A00%3A00.999Z"
-       response = requests.get(url)
-       data = response.text
-       parsed = json.loads(data)
-       json_file = open(apidata,"w")
-       json_file.write(data)
-       rates = parsed["data"]["ee"][0]
-       ee_rate = rates.get('price')
-       #logging.info(+ date_time + "Hind on "  str(ee_rate) )
-       return ee_rate
+    EET = timezone('Europe/Tallinn')
+    curDT =  datetime.datetime.now(EET)
+    date_time = curDT.strftime("%Y-%m-%dT%H")
+    url = "https://dashboard.elering.ee/api/nps/price?start=" + date_time + "%3A00%3A00.999Z&end=" + date_time + "%3A00%3A00.999Z"
+    response = requests.get(url)
+    data = response.text
+    parsed = json.loads(data)
+    json_file = open(apidata,"w")
+    json_file.write(data)
+    rates = parsed["data"]["ee"][0]
+    ee_rate = rates.get('price')
+    #logging.info(+ date_time + "Hind on "  str(ee_rate) )
+    return ee_rate
 
 def get_state(ip):
        url = "http://"+ ip +"/rpc"
@@ -91,22 +93,28 @@ def get_state(ip):
            return None
 
 def lylita_sisse(ip,switch_id):
-       url = "http://"+ ip +"/rpc"
-       headers = {'Content-Type': 'application/x-www-form-urlencoded'}
-       data = '{"id":1,"method":"Switch.Set","params":{"id":'+switch_id+',"on":true}}'
-       if switch_id == "":
-           logging.info("lylita_valja ei saanud koiki parameetreid katte")       
-       switch_on =  requests.post(url, headers=headers, data=data)
-       return switch_on
+    url = "http://"+ ip +"/rpc"
+    headers = {'Content-Type': 'application/x-www-form-urlencoded'}
+    data = '{"id":1,"method":"Switch.Set","params":{"id":'+switch_id+',"on":true}}'
+    if switch_id == "":
+        logging.info("lylita_valja ei saanud koiki parameetreid katte")      
+    try:
+        switch_on =  requests.post(url, headers=headers, data=data)
+    except:
+            switch_on = None
+    return switch_on
 
 def lylita_valja(ip,switch_id):
-       url = "http://"+ ip +"/rpc"
-       headers = {'Content-Type': 'application/x-www-form-urlencoded'}
-       data = '{"id":1,"method":"Switch.Set","params":{"id":'+switch_id+',"on":false}}'
-       if switch_id == "":
-           logging.info("lylita_valja ei saanud koiki parameetreid katte")
-       switch_off =  requests.post(url, headers=headers, data=data)
-       return switch_off
+    url = "http://"+ ip +"/rpc"
+    headers = {'Content-Type': 'application/x-www-form-urlencoded'}
+    data = '{"id":1,"method":"Switch.Set","params":{"id":'+switch_id+',"on":false}}'
+    if switch_id == "":
+        logging.info("lylita_valja ei saanud koiki parameetreid katte")
+    try:
+        switch_off =  requests.post(url, headers=headers, data=data)
+    except:
+        switch_off = None
+    return switch_off
 
 def get_pool_temp(ip):
         url = "http://"+ ip +"/status"
