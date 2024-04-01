@@ -80,10 +80,10 @@ def get_price():
     rates = parsed["data"][0]["price"]
     if weekday >= 5 or hour in [ 22, 23, 0, 1, 2, 3, 4, 5, 6 ]:
         ELV_rate = ELV_night
-        price = (rates + ELV_rate)* 1.22 + EE_marginal
+        price = round((rates + ELV_rate)* 1.22 + EE_marginal)
     else:
         ELV_rate = ELV_day
-        price = (rates + ELV_rate)* 1.22 + EE_marginal
+        price = round((rates + ELV_rate)* 1.22 + EE_marginal)
 
     #logging.info(+ date_time + "Hind on "  str(ee_rate) )
     return price
