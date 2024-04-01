@@ -40,7 +40,7 @@ pool_temp_id = config['SERVER']['POOL_TEMP_ID']
 ##Prices
 kyte_boiler_max_hind = 300.0
 kyte_saast_hind = 200.0
-bassinikytte_hind = 25.0
+bassinikytte_hind = 85.0
 
 ##Temps and humidity
 vee_temp_max = float(21.0)
@@ -52,7 +52,10 @@ k2_temp_ok = float(20.5)
 winter_holiday_temp = float(11.0)
 humidity_ok = float(75.0)
 
-
+##Energy company rates
+EE_marginal = 6.7
+ELV_day = 36.9
+ELV_night = 21
 
 logging.basicConfig(
     format='%(asctime)s %(levelname)-8s %(message)s',
@@ -61,20 +64,29 @@ logging.basicConfig(
     level=logging.INFO,
     datefmt='%Y-%m-%d %H:%M:%S')
 
+
+
 def get_price():
     EET = timezone('Europe/Tallinn')
     curDT =  datetime.datetime.now(EET)
-    date_time = curDT.strftime("%Y-%m-%dT%H")
-    url = "https://dashboard.elering.ee/api/nps/price?start=" + date_time + "%3A00%3A00.999Z&end=" + date_time + "%3A00%3A00.999Z"
+    hour = curDT.strftime("%H")
+    weekday = datetime.datetime.today().weekday()
+    url = "https://dashboard.elering.ee/api/nps/price/EE/current"
     response = requests.get(url)
     data = response.text
     parsed = json.loads(data)
     json_file = open(apidata,"w")
     json_file.write(data)
-    rates = parsed["data"]["ee"][0]
-    ee_rate = rates.get('price')
+    rates = parsed["data"][0]["price"]
+    if weekday >= 5 or hour in [ 22, 23, 0, 1, 2, 3, 4, 5, 6 ]:
+        ELV_rate = ELV_night
+        price = (rates + ELV_rate)* 1.22 + EE_marginal
+    else:
+        ELV_rate = ELV_day
+        price = (rates + ELV_rate)* 1.22 + EE_marginal
+
     #logging.info(+ date_time + "Hind on "  str(ee_rate) )
-    return ee_rate
+    return price
 
 def get_state(ip):
        url = "http://"+ ip +"/rpc"
