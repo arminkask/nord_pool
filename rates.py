@@ -40,7 +40,7 @@ pool_temp_id = config['SERVER']['POOL_TEMP_ID']
 ##Prices
 kyte_boiler_max_hind = 300.0
 kyte_saast_hind = 200.0
-bassinikytte_hind = 85.0
+bassinikytte_hind = 80.0
 
 ##Temps and humidity
 vee_temp_max = float(21.0)
@@ -78,7 +78,7 @@ def get_price():
     json_file = open(apidata,"w")
     json_file.write(data)
     rates = parsed["data"][0]["price"]
-    if weekday >= 5 or hour in [ 22, 23, 0, 1, 2, 3, 4, 5, 6 ]:
+    if weekday >= 5 or hour in [ "22", "23", "0", "1", "2", "3", "4", "5", "6" ]:
         ELV_rate = ELV_night
         price = round((rates + ELV_rate)* 1.22 + EE_marginal)
     else:
