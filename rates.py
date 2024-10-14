@@ -261,25 +261,15 @@ def main():
     else:
           logging.info("Turuhind " + turuhind_str + " on madalam kui hea hind " + bassinikytte_hind_str + "  - Kontrollime vee temperatuuri")
           basseini_temp = get_pool_temp(bassein_vee_temp_ip)
-          if basseini_temp < vee_temp_max:
+          if basseini_temp <= vee_temp_max:
               try:
                   basseini_temp_str = str(basseini_temp)
                   lylita_sisse(bassein_ip,"0")
                   bassein_state = True
-                  logging.info("Basseini temperatuur " + basseini_temp_str + " on madalam kui " + vee_temp_max_str + " - Basseinikyte sees")
+                  logging.info("Basseini temperatuur " + basseini_temp_str + " on madalam voi vordne kui " + vee_temp_max_str + " - Basseinikyte sees")
 
               except Exception as e:
                   logging.info(+ basseini_temp + " <  " + vee_temp_max + "- Ei saanud basseini IP -d katte " + bassein_ip)
-
-          elif basseini_temp == vee_temp_max:
-              try:
-                  basseini_temp_str = str(basseini_temp)
-                  lylita_sisse(bassein_ip,"0")
-                  bassein_state = True
-                  logging.info("Basseini temperatuur " + basseini_temp_str + " on vordne " + vee_temp_max_str + " - Basseinikyte sees")
-
-              except Exception as e:
-                  logging.info(+ basseini_temp + " = " + vee_temp_max + "- Ei saanud basseini IP -d katte " + bassein_ip)
 
           else:
               try:
