@@ -35,6 +35,8 @@ k0_dush_id = config['SERVER']['0K_DUSH_ID']
 k1_temp_id = config['SERVER']['1K_TEMP_ID']
 k2_temp_id = config['SERVER']['2K_TEMP_ID']
 k2_dush_id = config['SERVER']['2K_DUSH_ID']
+k2_kuivati = config['SERVER']['2K_KUIVATI']
+k0_kuivati = config['SERVER']['0K_KUIVATI']
 pool_temp_id = config['SERVER']['POOL_TEMP_ID']
 
 ##Prices
@@ -50,7 +52,7 @@ k0_temp_ok = float(18.5)
 k1_temp_ok = float(20.5)
 k2_temp_ok = float(20.5)
 winter_holiday_temp = float(11.0)
-humidity_ok = float(60.0)
+humidity_ok = float(55.0)
 
 ##Energy company rates
 EE_marginal = 6.7
@@ -225,12 +227,15 @@ def main():
     if k0_humidity > humidity_ok:
         try:
             lylita_sisse(vent_ip,"0")
+            lylita_sisse(k0_kuivati,"0")
             logging.info("Niiskus saunas on "+k0_humidity_str+" - Ventilaator sees")
+
         except Exception as e:
             logging.info("Ei saanud ventilaatori IP -d katte " + vent_ip)
     else:
         try:
             lylita_valja(vent_ip,"0")
+            lylita_valja(k0_kuivati,"0")
             logging.info("Niiskus saunas on "+k0_humidity_str+" - Ventilaator valjas")
         except Exception as e:
             logging.info("Ei saanud ventilaatori IP -d katte " + vent_ip)
@@ -238,12 +243,14 @@ def main():
     if k2_humidity > humidity_ok:
         try:
             lylita_sisse(vent_ip,"1")
+            lylita_sisse(k2_kuivati,"0")
             logging.info("Niiskus 2k on "+k2_humidity_str+" - Ventilaator sees")
         except Exception as e:
             logging.info("Ei saanud ventilaatori IP -d katte " + vent_ip)
     else:
         try:
             lylita_valja(vent_ip,"1")
+            lylita_valja(k2_kuivati,"0")
             logging.info("Niiskus 2k on "+k2_humidity_str+" - Ventilaator valjas")
         except Exception as e:
             logging.info("Ei saanud ventilaatori IP -d katte " + vent_ip)
