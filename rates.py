@@ -56,8 +56,8 @@ humidity_ok = float(55.0)
 
 ##Energy company rates
 EE_marginal = 6.7
-ELV_day = 36.9
-ELV_night = 21
+ELV_day = 45
+ELV_night = 25.6
 
 logging.basicConfig(
     format='%(asctime)s %(levelname)-8s %(message)s',
