@@ -224,7 +224,7 @@ def main():
     winter_holiday_temp_str = str(winter_holiday_temp)
     
     """ Kontrollime niiskust dushiruumides"""
-    if k0_humidity > humidity_ok:
+    if k0_humidity > humidity_ok and turuhind_int < kyte_boiler_max_hind_int:
         try:
             lylita_sisse(vent_ip,"0")
             lylita_sisse(k0_kuivati,"0")
@@ -240,7 +240,7 @@ def main():
         except Exception as e:
             logging.info("Ei saanud ventilaatori IP -d katte " + vent_ip)
             
-    if k2_humidity > humidity_ok:
+    if k2_humidity > humidity_ok and turuhind_int < kyte_boiler_max_hind_int:
         try:
             lylita_sisse(vent_ip,"1")
             lylita_sisse(k2_kuivati,"0")
