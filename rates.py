@@ -55,7 +55,7 @@ winter_holiday_temp = float(11.0)
 humidity_ok = float(55.0)
 
 ##Energy company rates
-EE_marginal = 6.7
+EE_marginal = 0.0
 ELV_day = 45
 ELV_night = 25.6
 
