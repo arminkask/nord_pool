@@ -179,7 +179,7 @@ def get_room_humidity_from_cloud(cloud_dev_id):
 
         except Exception as e:
             logging.info(str(e) + " cloud ID " + cloud_dev_id)
-            return 100        
+            return 1        
         
 
 def main():
