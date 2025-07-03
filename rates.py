@@ -8,7 +8,7 @@ import logging
 import os
 import sys
 import configparser
-
+import time
 #Variables
 #If set to 1 then run else exit 
 run = 1
@@ -148,39 +148,43 @@ def get_pool_temp(ip):
             return 100
 
 def get_room_temp_from_cloud(cloud_dev_id):
+        url = f"https://{cloud_host}/v2/devices/api/get?auth_key={cloud_token}"
+        headers = {"Content-Type": "application/json"}
         body = {
-                'id': cloud_dev_id,
-                'auth_key': cloud_token
+                "ids" : [cloud_dev_id],
+                "select" : ["status"]
                }
         try:
-            req = requests.post('https://' + cloud_host + '/device/status', data=body)
-            data = {}
+            req = requests.post(url, json=body,headers=headers)
             data = json.loads(req.text)
-            temp = data["data"]["device_status"]["temperature:0"]["tC"]
+            temp = data[0]["status"]["temperature:0"]["tC"]
             temp_float = float(temp)
+            time.sleep(1)
+            return temp_float
+
+        except Exception as e:
+            print(str(e) + " cloud ID " + cloud_dev_id)
+            return 100
+
+def get_room_humidity_from_cloud(cloud_dev_id):
+        url = f"https://{cloud_host}/v2/devices/api/get?auth_key={cloud_token}"
+        headers = {"Content-Type": "application/json"}
+        body = {
+                "ids" : [cloud_dev_id],
+                "select" : ["status"]
+               }
+        try:
+            req = requests.post(url, json=body,headers=headers)
+            data = json.loads(req.text)
+            temp = data[0]["status"]["humidity:0"]["rh"]
+            temp_float = float(temp)
+            time.sleep(1)
             return temp_float
 
         except Exception as e:
             logging.info(str(e) + " cloud ID " + cloud_dev_id)
             return 100
-
-def get_room_humidity_from_cloud(cloud_dev_id):
-        body = {
-                'id': cloud_dev_id,
-                'auth_key': cloud_token
-               }
-        try:
-            req = requests.post('https://' + cloud_host + '/device/status', data=body)
-            data = {}
-            data = json.loads(req.text)
-            temp = data["data"]["device_status"]["humidity:0"]["rh"]
-            temp_float = float(temp)
-            return temp_float
-
-        except Exception as e:
-            logging.info(str(e) + " cloud ID " + cloud_dev_id)
-            return 1        
-        
+ 
 
 def main():
 
