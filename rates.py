@@ -50,7 +50,7 @@ toa_temp_max = float(21.5)
 p_temp_ok = float(18.0)
 k0_temp_ok = float(18.5)
 k1_temp_ok = float(20.5)
-k2_temp_ok = float(20.5)
+k2_temp_ok = float(21.0)
 winter_holiday_temp = float(11.0)
 humidity_ok = float(60.0)
 
