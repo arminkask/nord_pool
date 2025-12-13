@@ -392,7 +392,7 @@ def main():
                     sys.exit(1)
                     
             except Exception as e:
-               logging.info(f"1 korruse temperatuur on madal - Ei saanud kytte IP -d katte " {kyte_x3_ip} - {e})
+               logging.info(f"1 korruse temperatuur on madal - Ei saanud kytte IP -d katte  {kyte_x3_ip} - {e}")
 
         elif not kyte_x3_state:
             try:
