@@ -381,23 +381,18 @@ def main():
                 logging.info("get X3 - Ei saanud IP -d katte " + kyte_x3_ip)
                 sys.exit(1)
 
-        
-        if k1_temp < k1_temp_ok:
+        if (k1_temp < k1_temp_ok) or (k2_temp < k2_temp_ok):
             try:
                 lylita_valja(kyte_x3_ip,"0")
-                logging.info("1 korruse temperatuur on madal " + k1_temp_str + " - Kyte sees")
-                sys.exit(1)
+                if k1_temp < k1_temp_ok:
+                    logging.info("1 korruse temperatuur on madal " + k1_temp_str + " - Kyte sees")
+                    sys.exit(1)
+                elif k2_temp < k2_temp_ok:
+                    logging.info("2 korruse temperatuur on madal " + k2_temp_str + " - Kyte sees")
+                    sys.exit(1)
+                    
             except Exception as e:
-               logging.info("1 korruse temperatuur on madal - Ei saanud kytte IP -d katte " + kyte_x3_ip)
-
-        elif k2_temp < k2_temp_ok:
-            try:
-                lylita_valja(kyte_x3_ip,"0")
-                logging.info("2 korruse temperatuur on madal " + k2_temp_str + " - Kyte sees")
-                sys.exit(1)
-
-            except Exception as e:
-                logging.info("2 korruse temperatuur on madal - Ei saanud kytte IP -d katte " + kyte_x3_ip)
+               logging.info(f"1 korruse temperatuur on madal - Ei saanud kytte IP -d katte " {kyte_x3_ip} - {e})
 
         elif not kyte_x3_state:
             try:
