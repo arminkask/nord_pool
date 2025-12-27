@@ -45,7 +45,7 @@ kyte_saast_hind = 200.0
 bassinikytte_hind = 75.0
 
 ##Temps and humidity
-vee_temp_max = float(11.5)
+vee_temp_max = float(21.5)
 toa_temp_max = float(21.5)
 p_temp_ok = float(18.0)
 k0_temp_ok = float(18.5)
