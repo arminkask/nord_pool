@@ -52,7 +52,7 @@ k0_temp_ok = float(18.5)
 k1_temp_ok = float(20.5)
 k2_temp_ok = float(21.0)
 winter_holiday_temp = float(11.0)
-humidity_ok = float(57.0)
+humidity_ok = float(54.0)
 
 ##Energy company rates
 EE_marginal = 0.0
