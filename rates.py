@@ -40,7 +40,7 @@ k0_kuivati = config['SERVER']['0K_KUIVATI']
 pool_temp_id = config['SERVER']['POOL_TEMP_ID']
 
 ##Prices
-kyte_boiler_max_hind = 500.0
+kyte_boiler_max_hind = 700.0
 kyte_saast_hind = 200.0
 bassinikytte_hind = 75.0
 
