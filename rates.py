@@ -203,7 +203,9 @@ def main():
     h0 = cloud.get(k0_dush_id, {}).get("humidity:0", {}).get("rh")
     h2 = cloud.get(k2_dush_id, {}).get("humidity:0", {}).get("rh")
     pool_temp = get_pool_temp(bassein_vee_temp_ip)
-    logging.info('=' * 50)
+    logging.info('=' * 70)
+    logging.info('*' * 70)
+    logging.info('=' * 70)
     logging.info(f"PRICE={price} K1={k1} K2={k2} H0={h0} H2={h2} Pool={pool_temp}")
 
     # -------- HUMIDITY --------
