@@ -179,7 +179,7 @@ def get_pool_temp(ip):
         except Exception as e:
             logging.error(f"Pool temp fetch failed {ip} -  {e}")
             return None
-    
+
 # =========================
 # MAIN LOGIC
 # =========================
@@ -225,7 +225,7 @@ def main():
         switch(vent_ip, "1", False, "Vent_2k")
         switch(k2_kuivati, "0", False, "Kuivati_2k")
 
-    
+
     if WINTER_HOLIDAY:
         if any(t and t < winter_holiday_temp for t in [k1, k2]):
             logging.info(f"TALVE PUHKUS - temperatuur madalam kui {winter_holiday_temp}  - Kyte sisse")
@@ -245,39 +245,38 @@ def main():
 
     logging.info(f"Hind {price} on madalam kui {kyte_boiler_max_hind} - Kyte ja boiler sisse")
     switch(boiler_ip, "0", True, "Boiler")
-    
+
     # -------- POOL -----------
-    
+
     if price > bassinikytte_hind:
         logging.info(f"Hind {price} on korgem kui basseinikytte lubatud hind {bassinikytte_hind} - Basseinikyte valjas")
         switch(bassein_ip,"0", False, "Bassein")
 
     else:
         if pool_temp <= vee_temp_max:
-            switch(bassein_ip, "0", True, "Bassein")
             logging.info(f"Basseini temperatuur {pool_temp} on madalam voi vordne kui {vee_temp_max} - Basseinikyte sees")
+            switch(bassein_ip, "0", True, "Bassein")
         else:
-            switch(bassein_ip, "0", False, "Bassein")
             logging.info(f"Basseini temperatuur {pool_temp} on korgem kui {vee_temp_max} - Basseinikyte valjas")
+            switch(bassein_ip, "0", False, "Bassein")
 
     # -------- HEATING --------
     if price < kyte_saast_hind:
         if (k1 and k1 < toa_temp_max) or (k2 and k2 < toa_temp_max):
-            heater_on()
             logging.info(f"Hind {price} on madalam kui {kyte_saast_hind} - K1 temp {k1}, K2 temp {k2} on madalam kui {toa_temp_max} - kyte sisse")
+            heater_on()
         else:
-            heater_off()
             logging.info(f"Hind {price} on madalam kui {kyte_saast_hind} - K1 temp {k1}, K2 temp {k2} on korgem kui {toa_temp_max} - kyte valja")
+            heater_off()
         return
 
     if (k1 and k1 < k1_temp_ok) or (k2 and k2 < k2_temp_ok):
-        heater_on()
         logging.info(f"Hind {price} on korgem kui {kyte_saast_hind} - K1 temp {k1}, K2 temp {k2} on madalam kui K1:{k1_temp_ok}, K2:{k2_temp_ok} - kyte sisse")
+        heater_on()
     else:
-        heater_off()
         logging.info(f"Hind {price} on korgem kui {kyte_saast_hind} - K1 temp {k1}, K2 temp {k2} on korgem kui K1:{k1_temp_ok}, K2:{k2_temp_ok} - kyte valja")
+        heater_off()
 
-# =========================
 if __name__ == "__main__":
     main()
 
