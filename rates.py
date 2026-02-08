@@ -237,11 +237,14 @@ def main():
 
     if price > kyte_boiler_max_hind:
         if not any(t and t < talve_temp_min for t in [k1, k2]):
-            logging.info(f"Hind {price} on korgem kui {kyte_boiler_max_hind} - Kyte ja boiler valja")
+            logging.info(f"Hind {price} on korgem kui {kyte_boiler_max_hind} - Kyte, bassein ja boiler valja")
             heater_off()
-            switch(boiler_ip, "0", False, "Boiler")
         else:
+            logging.info(f"Hind {price} on korgem kui {kyte_boiler_max_hind} - K1:{k1}, K2:{k2} Kyte sees - bassein ja boiler valja")
             heater_on()
+            
+        switch(bassein_ip,"0", False, "Bassein")
+        switch(boiler_ip, "0", False, "Boiler")
         return
 
     logging.info(f"Hind {price} on madalam kui {kyte_boiler_max_hind} - Kyte ja boiler sisse")
