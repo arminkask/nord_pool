@@ -67,7 +67,7 @@ bassein_vee_temp_ip = config['SERVER']['POOL_WATER_TEMP_IP']
 # =========================
 kyte_boiler_max_hind = 500
 kyte_saast_hind = 200
-bassinikytte_hind = 75 
+bassinikytte_hind = 75
 
 toa_temp_max = 21.5
 k1_temp_ok = 20.5
@@ -200,9 +200,7 @@ def main():
     h0 = cloud.get(k0_dush_id, {}).get("humidity:0", {}).get("rh")
     h2 = cloud.get(k2_dush_id, {}).get("humidity:0", {}).get("rh")
     pool_temp = get_pool_temp(bassein_vee_temp_ip)
-    logging.info('=' * 70)
-    logging.info('*' * 70)
-    logging.info('=' * 70)
+
     logging.info(f"PRICE={price} K1={k1} K2={k2} H0={h0} H2={h2} Pool={pool_temp}")
 
     # -------- HUMIDITY --------
@@ -237,10 +235,9 @@ def main():
         if not any(t and t < talve_temp_min for t in [k1, k2]):
             logging.info(f"Hind {price} on korgem kui {kyte_boiler_max_hind} - Kyte ja boiler valja")
             heater_off()
+            switch(boiler_ip, "0", False, "Boiler")
         else:
             heater_on()
-        switch(boiler_ip, "0", False, "Boiler")
-        switch(bassein_ip, "0", False, "Bassein")
         return
 
     logging.info(f"Hind {price} on madalam kui {kyte_boiler_max_hind} - Kyte ja boiler sisse")
@@ -253,7 +250,7 @@ def main():
         switch(bassein_ip,"0", False, "Bassein")
 
     else:
-        if pool_temp and pool_temp <= vee_temp_max:
+        if pool_temp <= vee_temp_max:
             logging.info(f"Basseini temperatuur {pool_temp} on madalam voi vordne kui {vee_temp_max} - Basseinikyte sees")
             switch(bassein_ip, "0", True, "Bassein")
         else:
