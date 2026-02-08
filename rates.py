@@ -67,7 +67,7 @@ bassein_vee_temp_ip = config['SERVER']['POOL_WATER_TEMP_IP']
 # =========================
 kyte_boiler_max_hind = 500
 kyte_saast_hind = 200
-bassinikytte_hind = 75
+bassinikytte_hind = 75 
 
 toa_temp_max = 21.5
 k1_temp_ok = 20.5
@@ -166,19 +166,16 @@ def get_cloud_status(ids):
 # POOL TEMP
 # =========================
 def get_pool_temp(ip):
-        url = f"http://{ip}/status"
-        headers = {'Content-Type': 'application/json'}
-        try:
-            req = requests.get(url, headers=headers)
-            data = {}
-            data = json.loads(req.text)
-            temp = data["ext_temperature"]["0"]["tC"]
-            temp_float = float(temp)
-            return temp_float
+    try:
+        r = http_get(f"http://{ip}/status")
+        data = r.json()
+        temp = data["ext_temperature"]["0"]["tC"]
+        temp_float = float(temp)
+        return temp_float
 
-        except Exception as e:
-            logging.error(f"Pool temp fetch failed {ip} -  {e}")
-            return None
+    except Exception as e:
+        logging.error(f"Pool temp fetch failed {ip} -  {e}")
+        return None
 
 # =========================
 # MAIN LOGIC
