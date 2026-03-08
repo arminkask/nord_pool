@@ -74,7 +74,7 @@ k1_temp_ok = 20.5
 k2_temp_ok = 20.5
 winter_holiday_temp = 11.0
 humidity_ok = 54.0
-vee_temp_max = 1.5
+vee_temp_max = 21.5
 talve_temp_min = 15.0
 
 ELV_day = 45
