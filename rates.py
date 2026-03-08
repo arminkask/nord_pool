@@ -200,7 +200,13 @@ def main():
     h0 = cloud.get(k0_dush_id, {}).get("humidity:0", {}).get("rh")
     h2 = cloud.get(k2_dush_id, {}).get("humidity:0", {}).get("rh")
     pool_temp = get_pool_temp(bassein_vee_temp_ip)
-
+    
+    #Evaluate if heating will be on when price is lower than kyte_saast_hind
+    if (k1 and k1 < toa_temp_max) or (k2 and k2 < toa_temp_max):
+        cheap_heating_on = True
+    else:
+        cheap_heating_on = False
+        
     logging.info('=' * 70)
     logging.info('*' * 70)
     logging.info('=' * 70)
@@ -257,16 +263,16 @@ def main():
         switch(bassein_ip,"0", False, "Bassein")
 
     else:
-        if pool_temp <= vee_temp_max:
-            logging.info(f"Basseini temperatuur {pool_temp} on madalam voi vordne kui {vee_temp_max} - Basseinikyte sees")
+        if pool_temp <= vee_temp_max and not cheap_heating_on:
+            logging.info(f"Basseini temperatuur {pool_temp} on madalam voi vordne kui {vee_temp_max} ja kyte on väljas - Basseinikyte sees")
             switch(bassein_ip, "0", True, "Bassein")
         else:
-            logging.info(f"Basseini temperatuur {pool_temp} on korgem kui {vee_temp_max} - Basseinikyte valjas")
+            logging.info(f"Basseini temperatuur {pool_temp} on korgem kui {vee_temp_max} voi on kyte sees - Basseinikyte valjas")
             switch(bassein_ip, "0", False, "Bassein")
 
     # -------- HEATING --------
     if price < kyte_saast_hind:
-        if (k1 and k1 < toa_temp_max) or (k2 and k2 < toa_temp_max):
+        if cheap_heating_on:
             logging.info(f"Hind {price} on madalam kui {kyte_saast_hind} - K1 temp {k1}, K2 temp {k2} on madalam kui {toa_temp_max} - kyte sisse")
             heater_on()
         else:
