@@ -69,7 +69,7 @@ kyte_boiler_max_hind = 500
 kyte_saast_hind = 200
 bassinikytte_hind = 75
 
-toa_temp_max = 21.5
+toa_temp_max = 20.5
 k1_temp_ok = 20.5
 k2_temp_ok = 20.5
 winter_holiday_temp = 11.0
