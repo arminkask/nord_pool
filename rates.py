@@ -67,7 +67,7 @@ bassein_vee_temp_ip = config['SERVER']['POOL_WATER_TEMP_IP']
 # =========================
 kyte_boiler_max_hind = 500
 kyte_saast_hind = 200
-bassinikytte_hind = 85
+bassinikytte_hind = 90
 
 toa_temp_max = 20.2
 k1_temp_ok = 19.8
