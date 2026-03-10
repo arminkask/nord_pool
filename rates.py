@@ -263,7 +263,7 @@ def main():
         switch(bassein_ip,"0", False, "Bassein")
 
     else:
-        if pool_temp <= vee_temp_max and not cheap_heating_on:
+        if pool_temp <= vee_temp_max: #and not cheap_heating_on:
             logging.info(f"Basseini temperatuur {pool_temp} on madalam voi vordne kui {vee_temp_max} ja kyte on väljas - Basseinikyte sees")
             switch(bassein_ip, "0", True, "Bassein")
         else:
