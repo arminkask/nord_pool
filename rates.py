@@ -67,14 +67,14 @@ bassein_vee_temp_ip = config['SERVER']['POOL_WATER_TEMP_IP']
 # =========================
 kyte_boiler_max_hind = 500
 kyte_saast_hind = 200
-bassinikytte_hind = 100
+bassinikytte_hind = 75
 
 toa_temp_max = 20.2
 k1_temp_ok = 19.8
 k2_temp_ok = 19.8
 winter_holiday_temp = 11.0
 humidity_ok = 54.0
-vee_temp_max = 21.5
+vee_temp_max = 25.5
 talve_temp_min = 15.0
 
 ELV_day = 45
